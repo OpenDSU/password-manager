@@ -1,0 +1,26 @@
+<psk-page title="Create a category">
+    <psk-form controller-name="AddCategoryController">
+        <psk-card class="add-category-card">
+            <psk-form-row class="add_category_form_row" layout="xs=[12,12,12] m=[6,6,6] l=[12,12,12] xl=[4,4,4]">
+                <div class="simple-flexible-row">
+                    <div class="left_align">
+                        <psk-text-input view-model="name"></psk-text-input>
+                    </div>
+                    <div class="right_align">
+                        <psk-label label="Icon:"></psk-label>
+                        <psk-icon icon="@iconChooser.value" color="#000000"></psk-icon>
+                    </div>
+                </div>
+                <div class="scrollable-box">
+                    <psk-icon-chooser icons-size="@iconChooser.size" icons-color="@iconChooser.color" value="@iconChooser.value"></psk-icon-chooser>
+                </div>
+            </psk-form-row>
+            <psk-form-row layout="xs=[6] m=[6] l=[6] xl=[6]">
+                <psk-condition condition="@error.occurred">
+                    <psk-label label="@error.message"></psk-label>
+                </psk-condition>
+                <psk-button type="submit" event-name="add-category-submit">Add category</psk-button>
+            </psk-form-row>
+        </psk-card>
+    </psk-form>
+</psk-page>

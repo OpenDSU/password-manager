@@ -1,0 +1,12 @@
+<psk-container controller-name="ConfirmPinController">
+    <psk-modal opened>
+        <psk-label slot="title" class="title" label="@title"></psk-label>
+
+        <div class='content'>
+            <psk-password-input view-model="masterPassword"></psk-password-input>
+        </div>
+        <div class='footer' slot='footer'>
+            <psk-button event-name="master-password-check">Done</psk-button>
+        </div>
+    </psk-modal>
+</psk-container>

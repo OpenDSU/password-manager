@@ -1,0 +1,30 @@
+{
+  "defaultMenuConfig": {
+    "icon": "fa-bars",
+    "type": "route",
+    "component": "psk-page-loader",
+    "exact": true,
+    "404": "/pages/404.html"
+  },
+  "pages": [
+    {
+      "name": "Home",
+      "path": "/home",
+      "icon": "fa-home",
+      "pageSrc": "view-categories.html",
+      "tags": "view-items"
+    },
+    {
+      "name": "View passwords",
+      "tags": "view-passwords"
+    },
+    {
+      "name": "Add password",
+      "tags": "add-password"
+    },
+    {
+      "name": "Add category",
+      "tags": "add-category"
+    }
+  ]
+}

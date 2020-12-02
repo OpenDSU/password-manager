@@ -1,0 +1,15 @@
+{
+  "basePagesUrl": "/pages/",
+  "profile": {
+    "username": "SSapp",
+    "email": "your-email@domain.com",
+    "avatar": "/resources/images/cardinal.png"
+  },
+  "modals": {
+    "confirmPinModal": "confirm-pin-modal.html",
+    "confirmActionModal": "confirm-action-modal.html",
+    "shareQRCodeModal": "share-qrcode-modal.html",
+    "importQRCodeModal": "import-qrcode-modal.html"
+  },
+  "theme" : "summer-vibes-theme"
+}

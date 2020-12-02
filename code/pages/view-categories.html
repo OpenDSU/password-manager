@@ -1,0 +1,51 @@
+<psk-page title="Password mananger">
+    <psk-container class="view_category" controller-name="ViewCategoriesController">
+        <div class="row_align">
+            <psk-text-input class="searchBar" view-model="searchBar"></psk-text-input>
+        </div>
+        <div class="row_align">
+            <psk-button-group id="category-actions" label="Actions" classes="add-menu bottom-border">
+                <psk-button event-name="add-password">Add password</psk-button>
+                <psk-button event-name="add-category">Add category</psk-button>
+                <psk-button event-name="import-category">Import category</psk-button>
+            </psk-button-group>
+
+            <psk-button id="category-menu-trigger" event-name="category-menu-click">
+                <psk-icon icon="@categoryMenu.icon" color="#000000" ></psk-icon>
+            </psk-button>
+
+            <psk-condition condition="@categoryMenu.clicked">
+                <div slot="condition-true">
+                    <psk-button-group id="category-menu" class="visible">
+                        <psk-button class="category-menu-item" event-name="add-password">Add password</psk-button>
+                        <psk-button class="category-menu-item" event-name="add-category">Add category</psk-button>
+                        <psk-button class="category-menu-item" event-name="import-category">Import category</psk-button>
+                    </psk-button-group>
+                </div>
+                <div slot="condition-false">
+                    <psk-button-group id="category-menu" class="hidden">
+                        <psk-button class="category-menu-item" event-name="add-password">Add password</psk-button>
+                        <psk-button class="category-menu-item" event-name="add-category">Add category</psk-button>
+                        <psk-button class="category-menu-item" event-name="import-category">Import category</psk-button>
+                    </psk-button-group>
+                </div>
+            </psk-condition>
+
+        </div>
+
+
+        <div class="categories_align">
+            <psk-for-each class="row_align" data-view-model="categoriesToShow">
+                <div class="view_category_folder">
+                    <psk-button event-name="category-click" event-data="@" class="view_category_button">
+                        <psk-img src="../resources/images/folder.png" class="view_category_folder_image"></psk-img>
+                        <psk-icon icon="@icon" color="rgb(255, 255, 255)" class="view_category_image"></psk-icon>
+                    </psk-button>
+                    <psk-label label="@data.name" class="view_category_label"></psk-label>
+                </div>
+                <psk-card slot="no-data" title="You have no categories."></psk-card>
+            </psk-for-each>
+        </div>
+        <psk-list-feedbacks messages-to-display="5" time-alive="3000"></psk-list-feedbacks>
+    </psk-container>
+</psk-page>
