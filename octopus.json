@@ -8,11 +8,11 @@
       "actions": [
         {
           "type": "execute",
-          "cmd": "node ../privatesky/psknode/bin/scripts/pskbuild.js --projectMap=./build/build.json  --prod=true --output=./code/constitution"
+          "cmd": "node ../opendsu-sdk/psknode/bin/scripts/pskbuild.js --projectMap=./build/build.json  --prod=true --output=./code/constitution"
         },
         {
           "type": "copy",
-          "src": "../privatesky/psknode/bundles/pskruntime.js",
+          "src": "../opendsu-sdk/psknode/bundles/pskruntime.js",
           "target": "code/constitution/pskruntime.js",
           "options": {
             "overwrite": true
@@ -20,7 +20,7 @@
         },
         {
           "type": "copy",
-          "src": "../privatesky/psknode/bundles/webshims.js",
+          "src": "../opendsu-sdk/psknode/bundles/webshims.js",
           "target": "code/constitution/webshims.js",
           "options": {
             "overwrite": true
@@ -28,7 +28,7 @@
         },
         {
           "type": "copy",
-          "src": "../privatesky/psknode/bundles/pskruntime.js",
+          "src": "../opendsu-sdk/psknode/bundles/pskruntime.js",
           "target": "code/scripts/bundles/pskruntime.js",
           "options": {
             "overwrite": true
@@ -36,7 +36,7 @@
         },
         {
           "type": "copy",
-          "src": "../privatesky/psknode/bundles/webshims.js",
+          "src": "../opendsu-sdk/psknode/bundles/webshims.js",
           "target": "code/scripts/bundles/webshims.js",
           "options": {
             "overwrite": true
@@ -44,7 +44,7 @@
         },
         {
           "type": "copy",
-          "src": "../privatesky/psknode/bundles/iframeBoot.js",
+          "src": "../opendsu-sdk/psknode/bundles/iframeBoot.js",
           "target": "code/scripts/bundles/iframeBoot.js",
           "options": {
             "overwrite": true

@@ -1,11 +1,8 @@
-import DSUStorage from "../../cardinal/controllers/base-controllers/lib/DSUStorage.js";
-
 class CategoryManagerService {
 
     constructor() {
         const HostBootScript = require("boot-host").HostBootScript;
         new HostBootScript("category-manager-service");
-        this.DSUStorage = new DSUStorage();
     }
 
     addCategory(categoryDetails, callback) {

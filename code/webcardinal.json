@@ -1,0 +1,35 @@
+{
+  "theme": "blue-fluorite-theme",
+  "version": "1.0.0-alpha",
+  "identity": {
+    "avatar": "assets/images/user.png",
+    "name": "Password Manager",
+    "email": "MyOrganisation@example.com"
+  },
+
+  "pagesFallback": {
+    "name": "404",
+    "src": "./404.html"
+  },
+  "pages": [
+    {
+      "name": "Home",
+      "path": "/",
+      "icon": "fa-home",
+      "src": "./view-categories.html",
+      "tag": "view-items"
+    },
+    {
+      "name": "View passwords",
+      "tag": "view-passwords"
+    },
+    {
+      "name": "Add password",
+      "tag": "add-password"
+    },
+    {
+      "name": "Add category",
+      "tag": "add-category"
+    }
+  ]
+}

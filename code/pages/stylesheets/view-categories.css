@@ -1,0 +1,16 @@
+.action-button {
+    border: 1px solid #525252;
+    border-radius: 12px;
+    padding: 4px;
+    margin: 4px;
+    width: 150px;
+    text-align: center;
+}
+
+#category-actions {
+    display: flex;
+}
+
+.middle-vertical-axis {
+    align-self: center;
+}

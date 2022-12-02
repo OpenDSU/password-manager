@@ -1,6 +1,7 @@
-import ContainerController from '../../cardinal/controllers/base-controllers/ContainerController.js';
 import {getCategoryManagerServiceInstance} from "../services/CategoryManagerService.js";
 import {MODELS, MESSAGES, DEFAULT_CATEGORIES} from '../services/Constants.js'
+
+const {WebcController} = WebCardinal.controllers;
 
 function getModel() {
     return {
@@ -20,12 +21,12 @@ function getModel() {
     }
 }
 
-export default class ViewCategoriesController extends ContainerController {
+export default class ViewCategoriesController extends WebcController {
     constructor(element, history) {
         super(element, history);
         this.CategoryManagerService = getCategoryManagerServiceInstance();
 
-        this.model = this.setModel(getModel());
+        this.model = getModel();
 
         this.categoryMenuOnClick();
         this.addPasswordOnClick();
@@ -73,26 +74,46 @@ export default class ViewCategoriesController extends ContainerController {
     }
 
     addCategoryOnClick() {
-        this.on('add-category', (event) => {
-            this.History.navigateToPageByTag('add-category');
+        this.onTagClick('add-category', (event) => {
+            console.log("clicked add-category");
+            this.navigateToPageTag('add-category');
         });
+
+        // this.on('add-category', (event) => {
+        //     this.History.navigateToPageByTag('add-category');
+        // });
     }
 
     addPasswordOnClick() {
-        this.on('add-password', (event) => {
-            this.History.navigateToPageByTag('add-password');
+        this.onTagClick('add-password', (event) => {
+            console.log("clicked add-password");
+            this.navigateToPageTag('add-password');
         });
+
+        // this.on('add-password', (event) => {
+        //     this.History.navigateToPageByTag('add-password');
+        // });
     }
 
-    categoryMenuOnClick() {
-        this.on('category-menu-click', (event) => {
+    categoryMenuOnClick() { // ////////
+        this.onTagClick('category-menu-trigger', (event) => {
+            console.log("clicked category menu");
             let isClicked = this.model.categoryMenu.clicked;
             let nextCategoryMenu = {
                 clicked: !isClicked,
-                icon: isClicked ? 'plus' : 'minus'
-            }
-            this.model.setChainValue('categoryMenu', JSON.parse(JSON.stringify(nextCategoryMenu)));
+                icon: isClicked ? 'plus' :  'minus'
+            };
+            // /////////////////
         });
+
+        // this.on('category-menu-click', (event) => {
+        //     let isClicked = this.model.categoryMenu.clicked;
+        //     let nextCategoryMenu = {
+        //         clicked: !isClicked,
+        //         icon: isClicked ? 'plus' : 'minus'
+        //     }
+        //     this.model.setChainValue('categoryMenu', JSON.parse(JSON.stringify(nextCategoryMenu)));
+        // });
     }
 
     _getAllCategories() {
@@ -128,11 +149,13 @@ export default class ViewCategoriesController extends ContainerController {
         DEFAULT_CATEGORIES.forEach(category => this.CategoryManagerService.addCategory(category, callback));
     }
 
-    importCategoryOnClick() {
-        this.on('import-category', (event) => {
+    importCategoryOnClick() { // ///////
+        this.onTagClick('import-category', (event) => {
+            console.log("clicked import-category");
             this._importQRCodeModalHandler(event, (err, data) => {
                 if (err) {
-                    this._emitFeedback(event, MESSAGES.ERROR.IMPORT_MODAL, MESSAGES.ERROR.ALERT_TYPE)
+                    console.log("EROARE IMPORT QR CODE MODAL HANDLER");
+                    this._emitFeedback(event, MESSAGES.ERROR.IMPORT_MODAL, MESSAGES.ERROR.ALERT_TYPE);
                     return;
                 }
                 this.CategoryManagerService.importCategory(data.value, (err, data) => {
@@ -145,6 +168,23 @@ export default class ViewCategoriesController extends ContainerController {
                 });
             });
         });
+
+        // this.on('import-category', (event) => {
+        //     this._importQRCodeModalHandler(event, (err, data) => {
+        //         if (err) {
+        //             this._emitFeedback(event, MESSAGES.ERROR.IMPORT_MODAL, MESSAGES.ERROR.ALERT_TYPE)
+        //             return;
+        //         }
+        //         this.CategoryManagerService.importCategory(data.value, (err, data) => {
+        //             if (err) {
+        //                 this._emitFeedback(event, MESSAGES.ERROR.IMPORT_MODAL, MESSAGES.ERROR.ALERT_TYPE)
+        //                 return;
+        //             }
+        //             this._emitFeedback(event, MESSAGES.SUCCESS.IMPORT_MODAL, MESSAGES.SUCCESS.ALERT_TYPE)
+        //             this._getAllCategories();
+        //         });
+        //     });
+        // });
     }
 
     _importQRCodeModalHandler(event, callback) {
