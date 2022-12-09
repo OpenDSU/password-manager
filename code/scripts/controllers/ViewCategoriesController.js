@@ -1,12 +1,15 @@
-import {getCategoryManagerServiceInstance} from "../services/CategoryManagerService.js";
-import {MODELS, MESSAGES, DEFAULT_CATEGORIES} from '../services/Constants.js'
+// noinspection DuplicatedCode
+
+import { getCategoryManagerServiceInstance } from "../services/CategoryManagerService.js";
+import {MODELS, MESSAGES, DEFAULT_CATEGORIES} from '../services/Constants.js';
+import { CategoriesDataSource } from "../datasources/CategoriesDataSource.js";
 
 const {WebcController} = WebCardinal.controllers;
 
 function getModel() {
     return {
-        categoriesToShow: [],
-        categories: [],
+        categoriesToShow: new CategoriesDataSource(),
+        categories: new CategoriesDataSource(),
         searchBar: {
             name: MODELS.searchBar.name,
             required: true,
@@ -22,6 +25,8 @@ function getModel() {
 }
 
 export default class ViewCategoriesController extends WebcController {
+    category;
+
     constructor(element, history) {
         super(element, history);
         this.CategoryManagerService = getCategoryManagerServiceInstance();
@@ -101,9 +106,9 @@ export default class ViewCategoriesController extends WebcController {
             let isClicked = this.model.categoryMenu.clicked;
             let nextCategoryMenu = {
                 clicked: !isClicked,
-                icon: isClicked ? 'plus' :  'minus'
+                icon: isClicked ? 'plus' : 'minus'
             };
-            // /////////////////
+            this.model.categoryMenu = JSON.parse(JSON.stringify(nextCategoryMenu));
         });
 
         // this.on('category-menu-click', (event) => {
@@ -140,8 +145,11 @@ export default class ViewCategoriesController extends WebcController {
                     'icon': category.data.folderType
                 }
             })
-            this.model.setChainValue('categories', JSON.parse(JSON.stringify(categories)));
-            this.model.setChainValue('categoriesToShow', JSON.parse(JSON.stringify(categories)));
+            this.model.categories = JSON.parse(JSON.stringify(categories));
+            this.model.categoriesToShow = JSON.parse(JSON.stringify(categories));
+
+            // this.model.setChainValue('categories', JSON.parse(JSON.stringify(categories)));
+            // this.model.setChainValue('categoriesToShow', JSON.parse(JSON.stringify(categories)));
         });
     }
 
