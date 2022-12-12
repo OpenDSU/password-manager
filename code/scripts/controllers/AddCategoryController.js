@@ -1,9 +1,8 @@
-import ContainerController from '../../cardinal/controllers/base-controllers/ContainerController.js';
 import {getCategoryManagerServiceInstance} from '../services/CategoryManagerService.js'
-import {getErrorMessageFromFieldsValidation} from '../services/Validator.js'
 import {MODELS} from '../services/Constants.js'
+import { CategoriesDataSource } from "../datasources/CategoriesDataSource.js";
 
-const CATEGORIES_DATA_PATH = '/code/categories.json';
+const { WebcController } = WebCardinal.controllers;
 
 function getModel() {
     return {
@@ -26,41 +25,52 @@ function getModel() {
     }
 }
 
-export default class AddPasswordController extends ContainerController {
-    constructor(element, history) {
-        super(element, history);
+export default class AddCategoryController extends WebcController {
+    constructor(...props) {
+        super(...props);
         this.CategoryManagerService = getCategoryManagerServiceInstance();
 
         this.getModel = this.setModel(getModel());
-        this.addCategoryOnClick();
+
+        this.addCategoryListener();
+        // this.addCategoryOnClick();
     }
 
-    addCategoryOnClick() {
-        this.on('add-category-submit', (event) => {
-            let errorMessage = getErrorMessageFromFieldsValidation(this.model);
-            if (errorMessage) {
-                this._setErrorMessage(errorMessage);
-                return;
-            }
-            let toSendObject = {
-                "name": this.model.name.value,
-                "folderType": this.model.iconChooser.value
-            }
-            this.CategoryManagerService.addCategory(toSendObject, (err, data) => {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                this.History.navigateToPageByTag('view-items');
-            });
+    addCategoryListener() {
+        this.onTagClick('add-new-category', () => {
+            console.log("clicked add-new-category");
+            const newCategoryName = document.getElementById('category-name').value;
+            this.model.dataSource = new CategoriesDataSource();
+            this.model.dataSource.addCategoryToEnclave(newCategoryName);
         });
     }
 
-    _setErrorMessage(message) {
-        let error = {
-            occurred: message || message === null || message.trim() === '',
-            message: message
-        }
-        this.model.setChainValue('error', JSON.parse(JSON.stringify(error)));
-    }
+    // addCategoryOnClick() {
+    //     this.on('add-category-submit', (event) => {
+    //         let errorMessage = getErrorMessageFromFieldsValidation(this.model);
+    //         if (errorMessage) {
+    //             this._setErrorMessage(errorMessage);
+    //             return;
+    //         }
+    //         let toSendObject = {
+    //             "name": this.model.name.value,
+    //             "folderType": this.model.iconChooser.value
+    //         }
+    //         this.CategoryManagerService.addCategory(toSendObject, (err, data) => {
+    //             if (err) {
+    //                 console.log(err);
+    //                 return;
+    //             }
+    //             this.History.navigateToPageByTag('view-items');
+    //         });
+    //     });
+    // }
+    //
+    // _setErrorMessage(message) {
+    //     let error = {
+    //         occurred: message || message === null || message.trim() === '',
+    //         message: message
+    //     }
+    //     this.model.setChainValue('error', JSON.parse(JSON.stringify(error)));
+    // }
 }
