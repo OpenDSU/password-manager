@@ -10,8 +10,15 @@
 
 #category-actions {
     display: flex;
+    margin-bottom: 30px;
 }
 
 .middle-vertical-axis {
+    margin-top: 30px;
     align-self: center;
+}
+
+.category-directory {
+    height: 3rem;
+    margin: 10px 0;
 }

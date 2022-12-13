@@ -1,17 +1,17 @@
 <link href="pages/stylesheets/view-categories.css" rel="stylesheet">
 
 <page-template>
-        <span slot="page-title">
-            Password manager
-        </span>
+    <span slot="page-title">
+        Password manager
+    </span>
     <div slot="page-content">
         <webc-container controller="ViewCategoriesController">
-            <div class="row_align">
+            <div>
                 <input class="form-control searchBar" type="text" value="@searchBar.value"/>
             </div>
             <div class="row_align">
-                <div id="category-actions" class="add-menu">
-                    <div class="middle-vertical-axis">Actions</div>
+                <div class="middle-vertical-axis">Actions</div>
+                <div id="category-actions">
                     <div data-tag="add-password" class="action-button">Add password</div>
                     <div data-tag="add-category" class="action-button">Add category</div>
                     <div data-tag="import-category" class="action-button">Import category</div>
@@ -22,30 +22,9 @@
                 <!--                    <psk-button event-name="import-category">Import category</psk-button>-->
                 <!--                </psk-button-group>-->
 
-                <div data-tag="category-menu-trigger" class="action-button">
-                    {{@categoryMenu.icon}}
-                </div>
-
                 <!--                <psk-button id="category-menu-trigger" event-name="category-menu-click">-->
                 <!--                    <psk-icon icon="@categoryMenu.icon" color="#000000"></psk-icon>-->
                 <!--                </psk-button>-->
-
-                <div data-if="@categoryMenu.clicked">
-                    <div slot="true">
-                        <div id="category-menu" class="visible">
-                            <div data-tag="add-password" class="category-menu-item">Add password</div>
-                            <div data-tag="add-category" class="category-menu-item">Add password</div>
-                            <div data-tag="import-category" class="category-menu-item">Add password</div>
-                        </div>
-                    </div>
-                    <div slot="false">
-                        <div id="category-menu" class="hidden">
-                            <div data-tag="add-password" class="category-menu-item">Add password</div>
-                            <div data-tag="add-category" class="category-menu-item">Add password</div>
-                            <div data-tag="import-category" class="category-menu-item">Add password</div>
-                        </div>
-                    </div>
-                </div>
 
                 <!--                <psk-condition condition="@categoryMenu.clicked">-->
                 <!--                    <div slot="condition-true">-->
@@ -64,19 +43,18 @@
                 <!--                        </psk-button-group>-->
                 <!--                    </div>-->
                 <!--                </psk-condition>-->
-
             </div>
 
-            <div class="categories_align">
-                <webc-datatable class="row_align" datasource="@categoriesToShow">
+            <div>
+                <div class="middle-vertical-axis">Categories</div>
+                <webc-datatable datasource="@categoriesToShow">
                     <div slot="no-data">
                         You have no categories.
                     </div>
-                    <div class="view_category_folder">
-                        <div data-tag="category-click" class="view_category_button">
-
-                            <img src="../resources/images/folder.png" class="view_category_folder_image" alt="dir">
-                            <!--                        <psk-icon icon="@icon" color="rgb(255, 255, 255)" class="view_category_image"></psk-icon>-->
+                    <div>
+                        <div data-tag="category-click">
+                            <img src="resources/images/folder.png" class="category-directory" alt="dir">
+                            <span>{{ @category }}</span>
                         </div>
                     </div>
 
@@ -98,15 +76,3 @@
         </webc-container>
     </div>
 </page-template>
-
-
-<!--<psk-page title="Password mananger">
-    <psk-container class="view_category" controller-name="ViewCategoriesController">
-        <div class="row_align">
-            <psk-text-input class="searchBar" view-model="searchBar"></psk-text-input>
-
-        </div>
-        <psk-list-feedbacks messages-to-display="5" time-alive="3000"></psk-list-feedbacks>
-    </psk-container>
-</psk-page>
-</psk-page>-->
