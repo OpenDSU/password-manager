@@ -1,42 +1,58 @@
-import ContainerController from '../../cardinal/controllers/base-controllers/ContainerController.js';
-import {getCategoryManagerServiceInstance} from "../services/CategoryManagerService.js";
-import {MODELS, MESSAGES, TIME_LIMITS} from '../services/Constants.js'
+// noinspection DuplicatedCode
 
-export default class ViewPasswordsController extends ContainerController {
+import {getCategoryManagerServiceInstance} from "../services/CategoryManagerService.js";
+import {MODELS, MESSAGES, TIME_LIMITS} from '../services/Constants.js';
+import { PasswordsDataSource } from "../datasources/PasswordsDataSource.js";
+
+const {WebcController} = WebCardinal.controllers;
+
+function getModel() {
+    return {
+        passwords: new PasswordsDataSource(),
+
+    }
+}
+
+
+export default class ViewPasswordsController extends WebcController {
     constructor(element, history) {
         super(element, history);
         this.CategoryManagerService = getCategoryManagerServiceInstance();
-        let state = this.History.getState();
-        let mountedCategoryPath = state.path;
-        let mountedCategoryIdentifier = state.identifier;
-        this.model = this.setModel({
-            categoryName: state.data.name,
-            mountedCategoryPath: mountedCategoryPath,
-            mountedCategoryIdentifier: mountedCategoryIdentifier,
-            pinNeedsToBeChecked: false,
-            lastTimePinWasChecked: null,
-            passwords: [],
-            passwordsToShow: [],
-            editModeEnabled: false,
-            searchBar: {
-                name: MODELS.searchBar.name,
-                required: true,
-                placeholder: MODELS.searchBar.placeholder,
-                value: ''
-            }
-        });
 
-        this._getAllPasswords();
-        this._feedbackEmitterInit(element);
+        this.model = getModel();
+        console.log(this.model);
 
-        this.addPasswordOnClick();
-        this.importPasswordOnClick();
-        this.showPasswordOnClick();
-        this.editPasswordOnClick();
-        this.sharePasswordOnClick();
-        this.shareCategoryOnClick();
-        this.deletePasswordOnClick();
-        this.searchBoxOnChange();
+        // let state = this.History.getState();
+        // let mountedCategoryPath = state.path;
+        // let mountedCategoryIdentifier = state.identifier;
+        // this.model = this.setModel({
+        //     categoryName: state.data.name,
+        //     mountedCategoryPath: mountedCategoryPath,
+        //     mountedCategoryIdentifier: mountedCategoryIdentifier,
+        //     pinNeedsToBeChecked: false,
+        //     lastTimePinWasChecked: null,
+        //     passwords: [],
+        //     passwordsToShow: [],
+        //     editModeEnabled: false,
+        //     searchBar: {
+        //         name: MODELS.searchBar.name,
+        //         required: true,
+        //         placeholder: MODELS.searchBar.placeholder,
+        //         value: ''
+        //     }
+        // });
+        //
+        // this._getAllPasswords();
+        // this._feedbackEmitterInit(element);
+        //
+        // this.addPasswordOnClick();
+        // this.importPasswordOnClick();
+        // this.showPasswordOnClick();
+        // this.editPasswordOnClick();
+        // this.sharePasswordOnClick();
+        // this.shareCategoryOnClick();
+        // this.deletePasswordOnClick();
+        // this.searchBoxOnChange();
     }
 
     _feedbackEmitterInit(element) {
