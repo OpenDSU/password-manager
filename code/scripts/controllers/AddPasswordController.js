@@ -1,10 +1,11 @@
-import ContainerController from '../../cardinal/controllers/base-controllers/ContainerController.js';
-import {getCategoryManagerServiceInstance} from "../services/CategoryManagerService.js";
-import {getErrorMessageFromFieldsValidation} from '../services/Validator.js'
 import {MESSAGES, MODELS} from '../services/Constants.js'
+import { CategoriesDataSource } from "../datasources/CategoriesDataSource.js";
+
+const {WebcController} = WebCardinal.controllers;
 
 function getModel() {
     return {
+        categoriesToShow: new CategoriesDataSource(),
         name: {
             label: MODELS.name.label,
             name: MODELS.name.name,
@@ -55,13 +56,44 @@ function getModel() {
     };
 }
 
-export default class AddPasswordController extends ContainerController {
+export default class AddPasswordController extends WebcController {
     constructor(element, history) {
         super(element, history);
 
-        this.CategoryManagerService = getCategoryManagerServiceInstance();
-        this._populateCategoryList(history.location.state);
-        this.addPasswordOnClick();
+        this.model = getModel();
+        this.initCategories();
+        this.addNewPassword();
+
+        // this.CategoryManagerService = getCategoryManagerServiceInstance();
+        // this._populateCategoryList(history.location.state);
+        // this.addPasswordOnClick();
+    }
+
+    async initCategories() {
+        this.model.categories = (await $$.promisify(this.model.categoriesToShow.enclave.getAllRecords)("", "categories")).map(obj => obj.category);
+    }
+
+    addNewPassword() {
+        this.onTagClick("add-password-submit", () => {
+            const newPassword = {
+                name: document.getElementById("name").value,
+                domain: document.getElementById("domain").value,
+                email: document.getElementById("email-address").value,
+                category: document.getElementById("category").value,
+                password: document.getElementById("password").value,
+                confirmPassword: document.getElementById("confirm-password").value
+            };
+            try {
+                if (newPassword.password !== newPassword.confirmPassword) {
+                    throw("Inserted passwords are different!");
+                }
+                this.model.dataSource = new CategoriesDataSource();
+                this.model.dataSource.addPasswordToCategory(newPassword);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        })
     }
 
     addPasswordOnClick() {

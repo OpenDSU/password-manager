@@ -38,6 +38,7 @@ export class CategoriesDataSource extends DataSource {
 
     async getPageDataAsync(startOffset, dataLengthForCurrentPage) {
         const data = await db.fetchData(startOffset, dataLengthForCurrentPage);
+        console.log(data);
         return data;
     }
 
@@ -56,5 +57,24 @@ export class CategoriesDataSource extends DataSource {
         console.log("inserted into enclave");
         // const result = await $$.promisify(this.enclave.getAllRecords)("", "categories");
         // console.log(result);
+    }
+
+    async addPasswordToCategory(passwordObject) {
+        console.log("apel add password ", passwordObject.password, " to enclave");
+        console.log(passwordObject);
+
+        if (this.initialised) {
+            await this.enclave.insertRecord("", passwordObject.category, passwordObject.password, {data: "encrypted"}, {"password": passwordObject}, (err, result) => console.log(err, result));
+            const obj = await $$.promisify(this.enclave.getAllRecords)("", passwordObject.category);
+            console.log("aicea e pasdwotfd objecty cateogry ", passwordObject.category);
+            console.log("aicea e obj ", obj);
+            return;
+        } else {
+            setTimeout(() => {
+                this.addPasswordToCategory(passwordObject);
+            }, 100);
+        }
+
+        console.log("am trecut prin else");
     }
 }
