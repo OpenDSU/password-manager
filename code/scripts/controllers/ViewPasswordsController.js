@@ -20,7 +20,6 @@ export default class ViewPasswordsController extends WebcController {
         this.CategoryManagerService = getCategoryManagerServiceInstance();
 
         this.model = getModel();
-        console.log(this.model);
 
         // let state = this.History.getState();
         // let mountedCategoryPath = state.path;

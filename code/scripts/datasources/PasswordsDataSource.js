@@ -14,7 +14,13 @@ const db = {
         for (let i = 0; i < categories.length; i++) {
             console.log("categories[i].category ", categories[i].category);
             passwords = passwords.concat((await $$.promisify(this.enclave.getAllRecords)("", categories[i].category))
-                .map(password => password.password));
+                .map(password => {
+                    const obj = password.password;
+                    obj.inputModel = {
+                        value: obj.password
+                    }
+                    return obj;
+                }));
             console.log("parolele", passwords);
         }
         // passwords = await Promise.all(categories.map(async category => {
