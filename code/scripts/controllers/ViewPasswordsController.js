@@ -6,9 +6,9 @@ import { PasswordsDataSource } from "../datasources/PasswordsDataSource.js";
 
 const {WebcController} = WebCardinal.controllers;
 
-function getModel() {
+function getModel(filter) {
     return {
-        passwords: new PasswordsDataSource(),
+        passwords: new PasswordsDataSource({"category": filter})
 
     }
 }
@@ -19,7 +19,14 @@ export default class ViewPasswordsController extends WebcController {
         super(element, history);
         this.CategoryManagerService = getCategoryManagerServiceInstance();
 
-        this.model = getModel();
+        if (this.getState() !== undefined) {
+            this.filter = JSON.parse(this.getState());
+            this.model = getModel(this.filter.category);
+            console.log("modelul luat cu GET STATE ", this.model);
+        }
+        else {
+            this.model = getModel();
+        }
 
         // let state = this.History.getState();
         // let mountedCategoryPath = state.path;

@@ -73,9 +73,16 @@ export default class ViewCategoriesController extends WebcController {
     }
 
     categorySelectOnClick() {
-        this.on('category-click', (event) => {
-            this.History.navigateToPageByTag('view-passwords', JSON.parse(JSON.stringify(event.data)));
+        this.onTagClick('category-click', (event) => {
+            console.log("EVENT CATEGORY", event.category);
+            this.navigateToPageTag('view-passwords', JSON.stringify({
+                category: event.category
+            }));
         });
+
+        // this.on('category-click', (event) => {
+        //     this.History.navigateToPageByTag('view-passwords', JSON.parse(JSON.stringify(event.data)));
+        // });
     }
 
     addCategoryOnClick() {
