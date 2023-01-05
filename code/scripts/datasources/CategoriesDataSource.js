@@ -11,6 +11,15 @@ const db = {
             categories = [];
         }
         return categories;
+    },
+
+    async getRecordsNumber() {
+        let instance = await $$.promisify(getCategoryManagerServiceInstance)();
+        let categories = await $$.promisify(instance.listCategories, instance)();
+        if (!categories) {
+            return 0;
+        }
+        return categories.length;
     }
 };
 
@@ -25,5 +34,9 @@ export class CategoriesDataSource extends DataSource {
         const data = await db.fetchData(startOffset, dataLengthForCurrentPage);
         console.log(data);
         return data;
+    }
+
+    async getRecordsNumber() {
+        return await db.getRecordsNumber();
     }
 }

@@ -31,10 +31,15 @@ export default class ViewCategoriesController extends WebcController {
 
         this.model = getModel();
 
+        this.initHasCategories();
         this.addPasswordOnClick();
         this.addCategoryOnClick();
         this.categorySelectOnClick();
         this.searchBoxOnChange();
+    }
+
+    async initHasCategories() {
+        this.model.hasCategories = (await this.model.categoriesToShow.getRecordsNumber()) !== 0;
     }
 
     searchBoxOnChange() {
