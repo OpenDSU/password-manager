@@ -35,7 +35,6 @@ export default class ViewCategoriesController extends WebcController {
         this.addCategoryOnClick();
         this.categorySelectOnClick();
         this.searchBoxOnChange();
-        this._feedbackEmitterInit(element);
     }
 
     searchBoxOnChange() {
@@ -49,7 +48,7 @@ export default class ViewCategoriesController extends WebcController {
     categorySelectOnClick() {
         this.onTagClick('category-click', (event) => {
             this.navigateToPageTag('view-passwords', JSON.stringify({
-                category: event.category
+                category: event.name
             }));
         });
     }

@@ -1,6 +1,4 @@
-// noinspection DuplicatedCode
-
-import {getCategoryManagerServiceInstance} from "../services/CategoryManagerService.js";
+// import {getCategoryManagerServiceInstance} from "../services/CategoryManagerService.js";
 import {MODELS, MESSAGES, TIME_LIMITS} from '../services/Constants.js';
 import { PasswordsDataSource } from "../datasources/PasswordsDataSource.js";
 
@@ -13,16 +11,34 @@ function getModel(filter) {
     }
 }
 
-
 export default class ViewPasswordsController extends WebcController {
     constructor(element, history) {
         super(element, history);
-        this.CategoryManagerService = getCategoryManagerServiceInstance();
+
+        // getCategoryManagerServiceInstance((err, instance) => {
+        //     if (err) {
+        //         console.log("Error creating an instance of the Category Manager Service");
+        //     }
+        //     if (this.getState() !== undefined) {
+        //         // instance.listCategoryPasswords
+        //     }
+        //     else {
+        //         // instance.listAllPasswords((err, passwords) => {
+        //         //     if (err) {
+        //         //         // display modal with error message for the user
+        //         //         console.log("Failed to get all passwords from the enclave");
+        //         //     }
+        //         //     console.log(passwords);
+        //         //     this.model = passwords;
+        //         // })
+        //         this.model = getModel();
+        //     }
+        // })
 
         if (this.getState() !== undefined) {
             this.filter = JSON.parse(this.getState());
             this.model = getModel(this.filter.category);
-            console.log("modelul luat cu GET STATE ", this.model);
+            console.log("the model created with filter ", this.model);
         }
         else {
             this.model = getModel();

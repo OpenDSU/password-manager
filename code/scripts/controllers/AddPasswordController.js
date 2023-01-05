@@ -1,5 +1,6 @@
 import {MESSAGES, MODELS} from '../services/Constants.js'
-import { CategoriesDataSource } from "../datasources/CategoriesDataSource.js";
+import {CategoriesDataSource} from "../datasources/CategoriesDataSource.js";
+import {getCategoryManagerServiceInstance} from "../services/CategoryManagerService.js";
 
 const {WebcController} = WebCardinal.controllers;
 
@@ -69,8 +70,20 @@ export default class AddPasswordController extends WebcController {
         // this.addPasswordOnClick();
     }
 
-    async initCategories() {
-        this.model.categories = (await $$.promisify(this.model.categoriesToShow.enclave.getAllRecords)("", "categories")).map(obj => obj.category);
+    initCategories() {
+        getCategoryManagerServiceInstance((err, instance) => {
+            if (err) {
+                // display modal with error message for the user (e.g. try again)
+            }
+            instance.listCategories((err, data) => {
+                if (err) {
+                    console.log("ERROR WHILE GETTING CATEGORIES");
+                    // display modal with error message for the user (e.g. try again)
+                }
+                this.model.categories = data;
+            });
+        });
+        // this.model.categories = (await $$.promisify(this.model.categoriesToShow.enclave.getAllRecords)("", "categories")).map(obj => obj.category);
     }
 
     addNewPassword() {
@@ -83,16 +96,24 @@ export default class AddPasswordController extends WebcController {
                 password: document.getElementById("password").value,
                 confirmPassword: document.getElementById("confirm-password").value
             };
-            try {
-                if (newPassword.password !== newPassword.confirmPassword) {
-                    throw("Inserted passwords are different!");
-                }
-                this.model.dataSource = new CategoriesDataSource();
-                this.model.dataSource.addPasswordToCategory(newPassword);
+            if (newPassword.password !== newPassword.confirmPassword) {
+                alert("Inserted passwords are different!");
+                // display modal with error message for the user
+            } else {
+                getCategoryManagerServiceInstance((err, instance) => {
+                    if (err) {
+                        // display modal with error message for the user (e.g. try again)
+                    }
+                    instance.addPassword(newPassword, (err) => {
+                        if (err) {
+                            // display modal with error message for the user (e.g. try again)
+                        }
+                        this.navigateToPageTag('view-passwords');
+                    });
+                });
             }
-            catch (err) {
-                console.log(err);
-            }
+            // this.model.dataSource = new CategoriesDataSource();
+            // this.model.dataSource.addPasswordToCategory(newPassword);
         })
     }
 

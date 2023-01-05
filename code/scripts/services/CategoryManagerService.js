@@ -12,12 +12,21 @@ class CategoryManagerService {
         this.enclave.getAllRecords("categories", callback);
     }
 
+    /**
+     * Adds a new password to the "passwords" table in the main enclave.
+     * @param {Object} password - a password object with the following fields: name, domain, email, category, password
+     * @param {function} callback
+     */
     addPassword(password, callback) {
         this.enclave.insertRecord("passwords", password.domain, {data: "encrypted"}, password, callback);
     }
 
     listCategoryPasswords(categoryName, callback) {
-        this.enclave.filterRecords("passwords", ["category == categoryName"], callback);
+        this.enclave.filter("passwords", [`category == ${categoryName}`], callback);
+    }
+
+    listAllPasswords(callback) {
+        this.enclave.getAllRecords("passwords", callback);
     }
 
     editPassword(domain, password, callback) {
