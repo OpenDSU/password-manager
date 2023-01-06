@@ -96,21 +96,26 @@ export default class AddPasswordController extends WebcController {
                 password: document.getElementById("password").value,
                 confirmPassword: document.getElementById("confirm-password").value
             };
-            if (newPassword.password !== newPassword.confirmPassword) {
-                alert("Inserted passwords are different!");
+            if (!newPassword.name || !newPassword.domain || !newPassword.email || !newPassword.category || !newPassword.password) {
+                console.warn("Please fill out all the fields before saving a password!")
                 // display modal with error message for the user
             } else {
-                getCategoryManagerServiceInstance((err, instance) => {
-                    if (err) {
-                        // display modal with error message for the user (e.g. try again)
-                    }
-                    instance.addPassword(newPassword, (err) => {
+                if (newPassword.password !== newPassword.confirmPassword) {
+                    console.warn("Inserted passwords are different!");
+                    // display modal with error message for the user
+                } else {
+                    getCategoryManagerServiceInstance((err, instance) => {
                         if (err) {
                             // display modal with error message for the user (e.g. try again)
                         }
-                        this.navigateToPageTag('view-passwords');
+                        instance.addPassword(newPassword, (err) => {
+                            if (err) {
+                                // display modal with error message for the user (e.g. try again)
+                            }
+                            this.navigateToPageTag('view-passwords');
+                        });
                     });
-                });
+                }
             }
             // this.model.dataSource = new CategoriesDataSource();
             // this.model.dataSource.addPasswordToCategory(newPassword);
