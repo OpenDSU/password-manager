@@ -1,11 +1,14 @@
 .action-button {
-    border: 1px solid #525252;
+    border-width: 0;
     border-radius: 12px;
-    padding: 4px;
+    padding: 8px;
     margin: 4px;
     width: 150px;
     text-align: center;
     cursor: pointer;
+    background-color: #1e7e34;
+    font-weight: bold;
+    color: white;
 }
 
 #category-actions {
