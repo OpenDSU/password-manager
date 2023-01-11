@@ -21,6 +21,10 @@ class CategoryManagerService {
         this.enclave.insertRecord("passwords", password.domain, {data: "encrypted"}, password, callback);
     }
 
+    indexPasswords(callback) {
+        this.enclave.addIndex("passwords", "category", callback);
+    }
+
     listCategoryPasswords(categoryName, callback) {
         this.enclave.filter("passwords", [`category == ${categoryName}`], callback);
     }

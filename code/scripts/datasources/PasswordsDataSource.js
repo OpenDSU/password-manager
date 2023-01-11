@@ -9,6 +9,7 @@ const db = {
         let instance = await $$.promisify(getCategoryManagerServiceInstance)();
         let passwords;
         if (filter) {
+            await $$.promisify(instance.indexPasswords, instance)();
             passwords = await $$.promisify(instance.listCategoryPasswords, instance)(filter);
         }
         else {
