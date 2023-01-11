@@ -15,26 +15,6 @@ export default class ViewPasswordsController extends WebcController {
     constructor(element, history) {
         super(element, history);
 
-        // getCategoryManagerServiceInstance((err, instance) => {
-        //     if (err) {
-        //         console.log("Error creating an instance of the Category Manager Service");
-        //     }
-        //     if (this.getState() !== undefined) {
-        //         // instance.listCategoryPasswords
-        //     }
-        //     else {
-        //         // instance.listAllPasswords((err, passwords) => {
-        //         //     if (err) {
-        //         //         // display modal with error message for the user
-        //         //         console.log("Failed to get all passwords from the enclave");
-        //         //     }
-        //         //     console.log(passwords);
-        //         //     this.model = passwords;
-        //         // })
-        //         this.model = getModel();
-        //     }
-        // })
-
         if (this.getState() !== undefined) {
             this.filter = JSON.parse(this.getState());
             this.model = getModel(this.filter.category);
@@ -43,38 +23,6 @@ export default class ViewPasswordsController extends WebcController {
         else {
             this.model = getModel();
         }
-
-        // let state = this.History.getState();
-        // let mountedCategoryPath = state.path;
-        // let mountedCategoryIdentifier = state.identifier;
-        // this.model = this.setModel({
-        //     categoryName: state.data.name,
-        //     mountedCategoryPath: mountedCategoryPath,
-        //     mountedCategoryIdentifier: mountedCategoryIdentifier,
-        //     pinNeedsToBeChecked: false,
-        //     lastTimePinWasChecked: null,
-        //     passwords: [],
-        //     passwordsToShow: [],
-        //     editModeEnabled: false,
-        //     searchBar: {
-        //         name: MODELS.searchBar.name,
-        //         required: true,
-        //         placeholder: MODELS.searchBar.placeholder,
-        //         value: ''
-        //     }
-        // });
-        //
-        // this._getAllPasswords();
-        // this._feedbackEmitterInit(element);
-        //
-        // this.addPasswordOnClick();
-        // this.importPasswordOnClick();
-        // this.showPasswordOnClick();
-        // this.editPasswordOnClick();
-        // this.sharePasswordOnClick();
-        // this.shareCategoryOnClick();
-        // this.deletePasswordOnClick();
-        // this.searchBoxOnChange();
     }
 
     _feedbackEmitterInit(element) {
